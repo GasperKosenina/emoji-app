@@ -1,5 +1,7 @@
 import AddPostForm from "@/components/AddPostForm";
 import { getPosts } from "./db/actions";
+import { UserButton } from "@clerk/nextjs";
+
 
 interface Emoji {
   id: string
