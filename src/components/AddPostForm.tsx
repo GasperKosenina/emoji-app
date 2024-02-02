@@ -2,6 +2,7 @@
 import { addPost } from '@/app/db/actions';
 import { useRef } from 'react';
 import { useFormStatus } from 'react-dom';
+import { LoadingSpinner } from './Loading';
 
 const AddPostForm = () => {
   const formRef = useRef<HTMLFormElement>(null)
@@ -23,6 +24,8 @@ function SubmitPostButton() {
   const { pending } = useFormStatus()
 
   return (
-    <button className='disabled:bg-slate-600 text-black' type="submit" disabled={pending}>Post</button>
+    <button className='disabled:text-slate-600 text-black' type="submit" disabled={pending}>
+      {pending ? <LoadingSpinner size={20} /> : "Post"}
+    </button>
   )
 }
