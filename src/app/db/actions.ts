@@ -12,3 +12,10 @@ export async function addPost(formData: FormData) {
   })
   revalidatePath("/")
 }
+
+
+export async function getPosts() {
+  await new Promise((resolve) => setTimeout(resolve, 1000))
+  const response = await prisma.post.findMany()
+  return response
+}

@@ -1,5 +1,5 @@
 import AddPostForm from "@/components/AddPostForm";
-import prisma from "../../prisma";
+import { getPosts } from "./db/actions";
 
 interface Emoji {
   id: string
@@ -7,8 +7,7 @@ interface Emoji {
 }
 
 export default async function Home() {
-  const emojis: Emoji[] = await prisma.post.findMany()
-
+  const emojis: Emoji[] = await getPosts();
   return (
     <div className="flex flex-col w-full">
       <div className="flex border-b-2 border-black p-7">
