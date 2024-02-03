@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { ClerkProvider } from "@clerk/nextjs";
+import { Toaster } from "react-hot-toast";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -21,6 +22,7 @@ export default function RootLayout({
         <body className={inter.className}>
           <Navbar />
           <div className="flex justify-center max-w-screen-md mx-auto h-screen border-x-2 border-black overflow-y-auto">
+            <div><Toaster /></div>
             {children}
           </div>
         </body>

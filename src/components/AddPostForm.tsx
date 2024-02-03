@@ -1,32 +1,24 @@
 'use client'
 import { addPost } from '@/app/db/actions';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { useFormStatus } from 'react-dom';
 import { LoadingSpinner } from './Loading';
-import InputEmoji from "react-input-emoji";
+import toast from 'react-hot-toast';
 
 const AddPostForm = () => {
   const formRef = useRef<HTMLFormElement>(null)
-  const [text, setText] = useState("");
   return (
     <form className='flex justify-between grow' ref={formRef} action={async (formData) => {
-      formData.append('emoji', text);
-      await addPost(formData);
-      setText('');
-    }}>
-      {/*
-      <input type='text' placeholder="Post emoji that describes your day..." required name="emoji" className=" outline-none bg-transparent w-full" />
-    */}
-      <InputEmoji
-        value={text}
-        onChange={setText}
-        cleanOnEnter
-        placeholder="Paste or choose your own emoji..."
-        theme='dark'
-        borderColor='outline-none'
-        maxLength={2}
-      />
+      try {
+        await addPost(formData)
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : "An unexpected error occurred";
+        toast.error(errorMessage);;
+      }
+      formRef.current?.reset()
 
+    }}>
+      <input type='text' placeholder="Post emoji that describes your day..." required name="emoji" className=" outline-none bg-transparent w-full" />
       <SubmitPostButton />
     </form >
   )
