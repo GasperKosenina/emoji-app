@@ -1,7 +1,7 @@
 "use server";
 import { revalidatePath } from "next/cache";
-import prisma from "../../../prisma";
 import { auth } from "@clerk/nextjs";
+import { prisma } from "../../../prisma";
 import { z } from "zod";
 
 // TODO: fix: z.emoji() does not validate numbers
@@ -32,7 +32,7 @@ export async function addPost(formData: FormData) {
   await new Promise((resolve) => setTimeout(resolve, 1000));
   await prisma.post.create({
     data: {
-      title: formData.get("emoji") as string,
+      emoji: formData.get("emoji") as string,
       userId: userId,
     },
   });
@@ -41,5 +41,15 @@ export async function addPost(formData: FormData) {
 
 export async function getPosts() {
   await new Promise((resolve) => setTimeout(resolve, 1000));
-  return await prisma.post.findMany();
+  try {
+    const response = await prisma.post.findMany({
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+    return response;
+  } catch (error) {
+    console.error("Unable to get posts:", error);
+    throw new Error("Unable to get posts");
+  }
 }

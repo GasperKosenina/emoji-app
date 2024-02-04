@@ -2,10 +2,12 @@ import AddPostForm from "@/components/AddPostForm";
 import { clerkClient } from "@clerk/nextjs";
 import Image from "next/image";
 import { getPosts } from "./db/actions";
-
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 interface Emoji {
   id: string;
-  title: string;
+  emoji: string;
+  createdAt: Date;
   userId: string;
 }
 
@@ -13,6 +15,8 @@ interface Author {
   imageUrl: string;
   firstName: string | null;
 }
+
+dayjs.extend(relativeTime);
 
 export default async function Home() {
   const emojis: Emoji[] = await getPosts();
@@ -32,9 +36,9 @@ export default async function Home() {
           <div className="flex flex-col">
             <div className="flex text-slate-300 gap-1">
               <span>@{(await getAuthorsData(e.userId)).firstName} </span> ·{" "}
-              <span>1 hour ago</span>
+              <span>{dayjs(e.createdAt).fromNow()}</span>
             </div>
-            <span>{e.title}</span>
+            <span>{e.emoji}</span>
           </div>
         </div>
       ))}
