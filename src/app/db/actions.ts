@@ -2,12 +2,25 @@
 import { revalidatePath } from "next/cache";
 import prisma from "../../../prisma";
 import { auth } from "@clerk/nextjs";
+import { z } from "zod";
+
+const schema = z.object({
+  emoji: z.string().emoji().min(1).max(280),
+});
 
 export async function addPost(formData: FormData) {
   const { userId } = auth();
 
   if (!userId) {
-    throw new Error("You must sign in to post emoji");
+    throw new Error("You must be signed in to post emojis");
+  }
+
+  const validateFields = schema.safeParse({
+    emoji: formData.get("emoji"),
+  });
+
+  if (!validateFields.success) {
+    throw new Error("Only emojis are allowed!");
   }
 
   await new Promise((resolve) => setTimeout(resolve, 1000));

@@ -19,7 +19,7 @@ const AddPostForm = () => {
             error instanceof Error
               ? error.message
               : "An unexpected error occurred";
-          toast.error(errorMessage);
+          toast.error(errorMessage, { duration: 2000 });
         }
         formRef.current?.reset();
       }}
