@@ -15,11 +15,9 @@ const AddPostForm = () => {
         try {
           await addPost(formData);
         } catch (error) {
-          const errorMessage =
-            error instanceof Error
-              ? error.message
-              : "An unexpected error occurred";
-          toast.error(errorMessage, { duration: 2000 });
+          if (error instanceof Error) {
+            toast.error(error.message, { duration: 2000 });
+          }
         }
         formRef.current?.reset();
       }}

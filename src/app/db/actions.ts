@@ -4,8 +4,13 @@ import prisma from "../../../prisma";
 import { auth } from "@clerk/nextjs";
 import { z } from "zod";
 
+// TODO: fix: z.emoji() does not validate numbers
 const schema = z.object({
-  emoji: z.string().emoji().min(1).max(280),
+  emoji: z
+    .string()
+    .emoji("Only emojis are allowed")
+    .min(1)
+    .max(2, "Only one emoji is allowed!"),
 });
 
 export async function addPost(formData: FormData) {
@@ -20,7 +25,8 @@ export async function addPost(formData: FormData) {
   });
 
   if (!validateFields.success) {
-    throw new Error("Only emojis are allowed!");
+    const errors = validateFields.error.issues.map((issue) => issue.message);
+    throw new Error(errors[0]);
   }
 
   await new Promise((resolve) => setTimeout(resolve, 1000));
