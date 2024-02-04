@@ -22,12 +22,13 @@ export default function RootLayout({
         <body className={inter.className}>
           <Navbar />
           <div className="flex justify-center max-w-screen-md mx-auto h-screen border-x-2 border-black overflow-y-auto">
-            <div><Toaster /></div>
+            <div>
+              <Toaster />
+            </div>
             {children}
           </div>
         </body>
       </html>
     </ClerkProvider>
-
   );
 }

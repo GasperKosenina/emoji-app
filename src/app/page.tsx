@@ -1,17 +1,17 @@
 import AddPostForm from "@/components/AddPostForm";
-import { getPosts } from "./db/actions";
-import Image from "next/image";
 import { clerkClient } from "@clerk/nextjs";
+import Image from "next/image";
+import { getPosts } from "./db/actions";
 
 interface Emoji {
-  id: string
-  title: string
-  userId: string
+  id: string;
+  title: string;
+  userId: string;
 }
 
 interface Author {
-  imageUrl: string
-  firstName: string | null
+  imageUrl: string;
+  firstName: string | null;
 }
 
 export default async function Home() {
@@ -24,14 +24,15 @@ export default async function Home() {
       {emojis.map(async (e) => (
         <div key={e.id} className="border-b-2 border-black p-7 flex gap-3">
           <Image
-            src={(await getAuthorsData(e.userId)).imageUrl} // Fix: Pass the imageUrl property of the Author object
+            src={(await getAuthorsData(e.userId)).imageUrl}
             alt="users profile"
             width={46}
             height={46}
           />
           <div className="flex flex-col">
             <div className="flex text-slate-300 gap-1">
-              <span>@{(await getAuthorsData(e.userId)).firstName} </span> · <span> 1 hour ago</span>
+              <span>@{(await getAuthorsData(e.userId)).firstName} </span> ·{" "}
+              <span>1 hour ago</span>
             </div>
             <span>{e.title}</span>
           </div>
@@ -41,12 +42,11 @@ export default async function Home() {
   );
 }
 
-
 async function getAuthorsData(userId: string) {
-  const user = await clerkClient.users.getUser(userId)
+  const user = await clerkClient.users.getUser(userId);
   const author: Author = {
     imageUrl: user.imageUrl,
-    firstName: user.firstName
-  }
-  return author
+    firstName: user.firstName,
+  };
+  return author;
 }
