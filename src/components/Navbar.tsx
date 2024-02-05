@@ -6,7 +6,7 @@ export default function Navbar() {
     <nav className="flex justify-between h-14 max-w-screen-md mx-auto p-4 items-center border-x-2 border-b-2 border-black">
       <NavBarLink href="/">feed</NavBarLink>
       <SignedIn>
-        <UserButton />
+        <UserButton afterSignOutUrl="/" />
       </SignedIn>
       <SignedOut>
         <SignInButton />

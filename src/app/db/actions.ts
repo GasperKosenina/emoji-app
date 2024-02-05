@@ -17,7 +17,10 @@ export async function addPost(formData: FormData) {
   const { userId } = auth();
 
   if (!userId) {
-    throw new Error("You must be signed in to post emojis");
+    // throw new Error("You must be signed in to post emojis");
+    return {
+      error: "You must be signed in to post emojis!",
+    };
   }
 
   const validateFields = schema.safeParse({
@@ -26,16 +29,26 @@ export async function addPost(formData: FormData) {
 
   if (!validateFields.success) {
     const errors = validateFields.error.issues.map((issue) => issue.message);
-    throw new Error(errors[0]);
+    // throw new Error(errors[0]);
+    return {
+      error: errors[0],
+    };
   }
 
   await new Promise((resolve) => setTimeout(resolve, 1000));
-  await prisma.post.create({
-    data: {
-      emoji: formData.get("emoji") as string,
-      userId: userId,
-    },
-  });
+  try {
+    await prisma.post.create({
+      data: {
+        emoji: formData.get("emoji") as string,
+        userId: userId,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    return {
+      error: "Something went wrong!",
+    };
+  }
   revalidatePath("/");
 }
 
@@ -49,7 +62,7 @@ export async function getPosts() {
     });
     return response;
   } catch (error) {
-    console.error("Unable to get posts:", error);
-    throw new Error("Unable to get posts");
+    console.log(error);
+    throw new Error("Cannot get the emojis. Try again!");
   }
 }

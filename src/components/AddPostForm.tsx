@@ -7,20 +7,21 @@ import { useRef } from "react";
 
 const AddPostForm = () => {
   const formRef = useRef<HTMLFormElement>(null);
+
+  async function clientAction(formData: FormData) {
+    const result = await addPost(formData);
+
+    if (result?.error) {
+      toast.error(result.error);
+    }
+
+    formRef.current?.reset();
+  }
   return (
     <form
       className="flex justify-between grow"
       ref={formRef}
-      action={async (formData) => {
-        try {
-          await addPost(formData);
-        } catch (error) {
-          if (error instanceof Error) {
-            toast.error(error.message, { duration: 2000 });
-          }
-        }
-        formRef.current?.reset();
-      }}
+      action={clientAction}
     >
       <input
         type="text"
