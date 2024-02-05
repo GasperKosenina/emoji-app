@@ -10,7 +10,7 @@ const schema = z.object({
   emoji: z
     .string()
     .emoji("Only emojis are allowed")
-    .min(2)
+    .min(1)
     .max(2, "Only one emoji is allowed!"),
 });
 
