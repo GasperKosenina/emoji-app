@@ -34,11 +34,11 @@ export default async function Home() {
             height={46}
           />
           <div className="flex flex-col">
-            <div className="flex text-slate-300 gap-1">
+            <div className="flex text-slate-300 gap-1 font-semibold">
               <span>@{(await getAuthorsData(e.userId)).firstName} </span> ·{" "}
               <span>{dayjs(e.createdAt).fromNow()}</span>
             </div>
-            <span>{e.emoji}</span>
+            <span className="text-slate-400">is feeling {e.emoji} today</span>
           </div>
         </div>
       ))}
