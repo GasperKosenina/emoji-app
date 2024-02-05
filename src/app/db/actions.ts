@@ -11,7 +11,7 @@ const schema = z.object({
     .string()
     .emoji("Only emojis are allowed")
     .min(1)
-    .max(2, "Only one emoji is allowed!"),
+    .max(250, "Only one emoji is allowed!"),
 });
 
 const ratelimit = new Ratelimit({

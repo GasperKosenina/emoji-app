@@ -17,21 +17,24 @@ const AddPostForm = () => {
 
     formRef.current?.reset();
   }
+
   return (
-    <form
-      className="flex justify-between grow"
-      ref={formRef}
-      action={clientAction}
-    >
-      <input
-        type="text"
-        placeholder="Post emoji that describes your day..."
-        required
-        name="emoji"
-        className=" outline-none bg-transparent w-full"
-      />
-      <SubmitPostButton />
-    </form>
+    <>
+      <form
+        className="flex justify-between grow"
+        ref={formRef}
+        action={clientAction}
+      >
+        <input
+          type="text"
+          placeholder="Post emoji that describes your day..."
+          required
+          name="emoji"
+          className=" outline-none bg-transparent w-full"
+        />
+        <SubmitPostButton />
+      </form>
+    </>
   );
 };
 
@@ -42,7 +45,7 @@ function SubmitPostButton() {
 
   return (
     <button
-      className="disabled:text-slate-600 text-black"
+      className="disabled:text-slate-600 text-black cursor-pointer"
       type="submit"
       disabled={pending}
     >

@@ -21,7 +21,7 @@ export default function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           <Navbar />
-          <div className="flex justify-center max-w-screen-md mx-auto h-screen border-x-2 border-black overflow-y-auto">
+          <div className="flex justify-center max-w-screen-md mx-auto h-full border-x-2 border-black">
             <div>
               <Toaster />
             </div>
