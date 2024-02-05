@@ -3,21 +3,27 @@ import { revalidatePath } from "next/cache";
 import { auth } from "@clerk/nextjs";
 import { prisma } from "../../../prisma";
 import { z } from "zod";
-
+import { Ratelimit } from "@upstash/ratelimit"; // for deno: see above
+import { Redis } from "@upstash/redis";
 // TODO: fix: z.emoji() does not validate numbers
 const schema = z.object({
   emoji: z
     .string()
     .emoji("Only emojis are allowed")
-    .min(1)
+    .min(2)
     .max(2, "Only one emoji is allowed!"),
+});
+
+const ratelimit = new Ratelimit({
+  redis: Redis.fromEnv(),
+  limiter: Ratelimit.slidingWindow(3, "3600s"),
+  analytics: true,
 });
 
 export async function addPost(formData: FormData) {
   const { userId } = auth();
 
   if (!userId) {
-    // throw new Error("You must be signed in to post emojis");
     return {
       error: "You must be signed in to post emojis!",
     };
@@ -29,9 +35,16 @@ export async function addPost(formData: FormData) {
 
   if (!validateFields.success) {
     const errors = validateFields.error.issues.map((issue) => issue.message);
-    // throw new Error(errors[0]);
     return {
       error: errors[0],
+    };
+  }
+
+  const { success } = await ratelimit.limit(userId);
+
+  if (!success) {
+    return {
+      error: "You can only post 3 emojis per hour. Try again in 1 hour!",
     };
   }
 
