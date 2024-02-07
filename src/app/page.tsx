@@ -38,7 +38,7 @@ export default async function Home() {
               <span>@{(await getAuthorsData(e.userId)).firstName} </span> ·{" "}
               <span>{dayjs(e.createdAt).fromNow()}</span>
             </div>
-            <span className="text-slate-400">is feeling {e.emoji} today</span>
+            <span className="text-slate-400">is feeling {e.emoji}</span>
           </div>
         </div>
       ))}
