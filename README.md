@@ -11,8 +11,13 @@ This project is a Next.js web app where users can post, browse, and search for e
 - **Vercel:** ☁️ For effortless deployment and global hosting.
 - **PostgreSQL & CockroachDB:** 🐘🦗 For scalable and reliable data storage.
 - **Prisma ORM:** 🪄 For streamlined interaction with your databases.
+- **Upstash:** 🗄️ For managing user requests and caching data.
 
 ## Features
 
 - Post, browse, and search for an endless stream of emojis!
 - Secure user authentication with Clerk for a smooth and trusted experience.
+
+## Visit the Site
+
+You can visit the site [here](https://my-nextjs-mucvkfhtu-gaspers-projects.vercel.app/).
