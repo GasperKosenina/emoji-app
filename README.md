@@ -20,4 +20,4 @@ This project is a Next.js web app where users can post, browse, and search for e
 
 ## Visit the Site
 
-You can visit the site [here](https://my-nextjs-mucvkfhtu-gaspers-projects.vercel.app/).
+You can visit the site [here](https://my-nextjs-app-chi-wine.vercel.app).
